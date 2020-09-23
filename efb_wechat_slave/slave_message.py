@@ -136,16 +136,16 @@ class SlaveMessageManager:
             return self.wechat_location_msg(msg)
         chat, author = self.get_chat_and_author(msg)
         if self.channel.flag("text_post_processing"):
-            text = ews_utils.wechat_string_unescape(msg.text)
-        else:
             n_words = []
-            text = msg.text or ""
+            text = ews_utils.wechat_string_unescape(msg.text)
             words = pseg.cut(text)
             for word,flag in words:
                 if flag[0] == 'n':
                     n_words.append("#{}".format(word))
             n_text = ' '.join(n_words)
             text=n_text+ '\n---------------' +text
+        else:
+            text = msg.text or ""
         efb_msg = Message(
             chat=chat, author=author,
             text=text,
