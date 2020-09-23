@@ -1,0 +1,6 @@
+[ehforwarderbot.slave]
+blueset.wechat = efb_wechat_slave:WeChatChannel
+
+[ehforwarderbot.wizard]
+blueset.wechat = efb_wechat_slave.wizard:wizard
+
