@@ -25,7 +25,6 @@ from . import constants
 from . import utils as ews_utils
 from .vendor import wxpy
 from .vendor.wxpy.api import consts
-import ircpy
 import jieba
 import jieba.posseg as pseg
 
