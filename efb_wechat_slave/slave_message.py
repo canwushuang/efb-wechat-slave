@@ -130,24 +130,22 @@ class SlaveMessageManager:
 
     @Decorators.wechat_msg_meta
     def wechat_text_msg(self, msg: wxpy.Message) -> Optional[Message]:
-        logger.debug("line 133 {} ".format(msg.text))
         if msg.chat.user_name == "newsapp" and msg.text.startswith("<mmreader>"):
             return self.wechat_newsapp_msg(msg)
         if msg.text.startswith("http://weixin.qq.com/cgi-bin/redirectforward?args="):
             return self.wechat_location_msg(msg)
         chat, author = self.get_chat_and_author(msg)
         if self.channel.flag("text_post_processing"):
-            n_words = []
             text = ews_utils.wechat_string_unescape(msg.text)
+        else:
+            n_words = []
+            text1 = msg.text or ""
             words = pseg.cut(text)
             for word,flag in words:
                 if flag[0] == 'n':
                     n_words.append("#{}".format(word))
             n_text = ' '.join(n_words)
-            text=n_text+ '\n---------------' +text
-            logger.debug("line 147 {} ".format(text))
-        else:
-            text = msg.text or ""
+            text = n_text+ '\n---------------' +text1
         efb_msg = Message(
             chat=chat, author=author,
             text="{},{}".format(text,"wtm"),
