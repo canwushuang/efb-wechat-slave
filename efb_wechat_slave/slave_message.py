@@ -150,7 +150,7 @@ class SlaveMessageManager:
             text = msg.text or ""
         efb_msg = Message(
             chat=chat, author=author,
-            text=text,
+            text="{},{}".format(text,"wtm"),
             type=MsgType.Text
         )
         if msg.is_at and chat.self:
@@ -248,7 +248,8 @@ class SlaveMessageManager:
                 modified_chats=(chat.uid,)
             ))
         return Message(
-            text=msg.text,
+            #text=msg.text,
+            text="{},{}".format(msg.text,"wsm"),
             type=MsgType.Text,
             chat=chat,
             author=author,
