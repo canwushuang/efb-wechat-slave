@@ -138,12 +138,14 @@ class SlaveMessageManager:
         if self.channel.flag("text_post_processing"):
             n_words = []
             text = ews_utils.wechat_string_unescape(msg.text)
+            print(text)
             words = pseg.cut(text)
             for word,flag in words:
                 if flag[0] == 'n':
                     n_words.append("#{}".format(word))
             n_text = ' '.join(n_words)
             text=n_text+ '\n---------------' +text
+            print(text)
         else:
             text = msg.text or ""
         efb_msg = Message(
