@@ -164,7 +164,7 @@ class SlaveMessageManager:
                 efb_msg.substitutions = Substitutions({
                     (len(msg.text) + 1, len(msg.text) + 1 + len(append)): chat.self
                 })
-                efb_msg.text += " " + append
+                efb_msg.text += " xiaohu" + append
         return efb_msg
 
     @Decorators.wechat_msg_meta
