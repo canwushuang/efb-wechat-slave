@@ -74,7 +74,7 @@ class SlaveMessageManager:
                 logger = logging.getLogger(__name__)
                 logger.debug("[%s] Raw message: %r", msg.id, msg.raw)
 
-                efb_msg: Optional[Message] = func(self, msg+'xiaohu', *args, **kwargs)
+                efb_msg: Optional[Message] = func(self, msg, *args, **kwargs)
 
                 if efb_msg is None:
                     return
@@ -99,7 +99,7 @@ class SlaveMessageManager:
 
                 logger.debug("[%s] Chat: %s, Author: %s", efb_msg.uid, efb_msg.chat, efb_msg.author)
 
-                coordinator.send_message(efb_msg)
+                coordinator.send_message(efb_msg+'hhhhhhh')
                 if efb_msg.file:
                     efb_msg.file.close()
 
@@ -164,7 +164,7 @@ class SlaveMessageManager:
                 efb_msg.substitutions = Substitutions({
                     (len(msg.text) + 1, len(msg.text) + 1 + len(append)): chat.self
                 })
-                efb_msg.text += " xiaohu" + append
+                efb_msg.text += " " + append
         return efb_msg
 
     @Decorators.wechat_msg_meta
