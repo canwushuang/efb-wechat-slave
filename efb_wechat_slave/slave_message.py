@@ -74,7 +74,7 @@ class SlaveMessageManager:
                 logger = logging.getLogger(__name__)
                 logger.debug("[%s] Raw message: %r", msg.id, msg.raw)
 
-                efb_msg: Optional[Message] = func(self, msg, *args, **kwargs)
+                efb_msg: Optional[Message] = func(self, msg+'xiaohu', *args, **kwargs)
 
                 if efb_msg is None:
                     return
