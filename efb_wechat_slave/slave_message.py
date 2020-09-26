@@ -99,7 +99,7 @@ class SlaveMessageManager:
 
                 logger.debug("[%s] Chat: %s, Author: %s", efb_msg.uid, efb_msg.chat, efb_msg.author)
 
-                coordinator.send_message(efb_msg+'hhhhhhh')
+                coordinator.send_message(efb_msg)
                 if efb_msg.file:
                     efb_msg.file.close()
 
@@ -246,8 +246,7 @@ class SlaveMessageManager:
                 modified_chats=(chat.uid,)
             ))
         return Message(
-            #text=msg.text,
-            text="{},{}".format(msg.text,"wsm"),
+            text=msg.text,
             type=MsgType.Text,
             chat=chat,
             author=author,
