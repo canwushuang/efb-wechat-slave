@@ -25,8 +25,6 @@ from . import constants
 from . import utils as ews_utils
 from .vendor import wxpy
 from .vendor.wxpy.api import consts
-import jieba
-import jieba.posseg as pseg
 
 if TYPE_CHECKING:
     from . import WeChatChannel
@@ -83,22 +81,6 @@ class SlaveMessageManager:
                     logger.debug("[%s] Dropping message as master channel is not ready yet.", efb_msg.uid)
                     return
                 
-                if efb_msg.text :
-                    n_words = []
-                    text1 = efb_msg.text or ""
-                    words = pseg.cut(text1)
-                    for word,flag in words:
-                        if flag[0] == 'n':
-                            n_words.append("#{}".format(word))
-                    n_text = ' '.join(n_words)
-                    text = n_text+ '\n---------------' +text1
-                    efb_msg = Message(
-                            chat=chat, author=author,
-                            text=text,
-                            type=MsgType.Text
-                    )
-                    return efb_msg
-
                 efb_msg.deliver_to = coordinator.master
 
                 # Format message IDs as JSON of List[List[str]].
@@ -155,16 +137,10 @@ class SlaveMessageManager:
             text = ews_utils.wechat_string_unescape(msg.text)
         else:
             n_words = []
-            text1 = msg.text or ""
-            words = pseg.cut(text)
-            for word,flag in words:
-                if flag[0] == 'n':
-                    n_words.append("#{}".format(word))
-            n_text = ' '.join(n_words)
-            text = n_text+ '\n---------------' +text1
+            text = msg.text or ""
         efb_msg = Message(
             chat=chat, author=author,
-            text="{},{}".format(text,"wtm"),
+            text=text,
             type=MsgType.Text
         )
         if msg.is_at and chat.self:
