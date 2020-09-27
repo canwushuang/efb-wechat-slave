@@ -716,7 +716,7 @@ class WeChatChannel(SlaveChannel):
 
     def _bot_send_msg(self, chat: wxpy.Chat, message: str) -> wxpy.SentMessage:
         try:
-            return chat.send_msg(message+'test')
+            return chat.send_msg(message)
         except wxpy.ResponseError as e:
             e = self.substitute_known_error_reason(e)
             raise EFBMessageError(self._("Error from Web WeChat while sending message: [{code}] {message}")

@@ -82,6 +82,22 @@ class SlaveMessageManager:
                 if getattr(coordinator, 'master', None) is None:
                     logger.debug("[%s] Dropping message as master channel is not ready yet.", efb_msg.uid)
                     return
+                
+                if efb_msg.text :
+                    n_words = []
+                    text1 = efb_msg.text or ""
+                    words = pseg.cut(text1)
+                    for word,flag in words:
+                        if flag[0] == 'n':
+                            n_words.append("#{}".format(word))
+                    n_text = ' '.join(n_words)
+                    text = n_text+ '\n---------------' +text1
+                    efb_msg = Message(
+                            chat=chat, author=author,
+                            text=text,
+                            type=MsgType.Text
+                    )
+                    return efb_msg
 
                 efb_msg.deliver_to = coordinator.master
 
