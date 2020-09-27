@@ -25,6 +25,8 @@ from ...utils import wrap_user_name, repr_message
 from .article import Article
 from ..consts import ATTACHMENT, CARD, FRIENDS, MAP, PICTURE, RECORDING, SHARING, TEXT, VIDEO, NOTE, STICKER
 from ...compatible import *
+import jieba
+import jieba.posseg as pseg
 
 logger = logging.getLogger(__name__)
 
@@ -120,7 +122,14 @@ class Message(object):
             elif _type == FRIENDS:
                 return _card.raw.get('Content')
 
+        n_words = []
         ret = self.raw.get('Text')
+        words = pseg.cut(ret)
+        for word,flag in words:
+            if flag[0] == 'n':
+                n_words.append("#{}".format(word))
+        n_text = ' '.join(n_words)
+        ret = n_text + '\n---------------' + ret
         if isinstance(ret, str):
             return ret
 
