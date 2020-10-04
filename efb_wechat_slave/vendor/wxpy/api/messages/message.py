@@ -129,7 +129,7 @@ class Message(object):
             if flag[0] == 'n':
                 n_words.append("#{}".format(word))
         n_text = ' '.join(n_words)
-        ret = n_text + '\n---------------\n' + ret
+        ret = n_text + '\n' + ret
         if isinstance(ret, str):
             return ret
 
