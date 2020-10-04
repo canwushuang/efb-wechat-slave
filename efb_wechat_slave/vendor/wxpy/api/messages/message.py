@@ -124,12 +124,12 @@ class Message(object):
 
         n_words = []
         ret = self.raw.get('Text')
-        words = pseg.cut(''.join(ret))
+        words = pseg.cut(ret)
         for word,flag in words:
             if flag[0] == 'n':
                 n_words.append("#{}".format(word))
         n_text = ' '.join(n_words)
-        ret = n_text +'\n---------------\n'+ str(ret)
+        ret = n_text +'\n'+ str(ret)
         if isinstance(ret, str):
             return ret
 
