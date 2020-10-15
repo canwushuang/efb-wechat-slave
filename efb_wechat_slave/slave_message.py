@@ -51,7 +51,7 @@ class SlaveMessageManager:
         # Message ID: [JSON ID, remaining count]
         self.recall_msg_id_conversion: Dict[str, Tuple[str, int]] = dict()
 
-    @SlaveMessageManager.Bot.register(Group, TEXT)
+    @bot.register(Group, TEXT)
     def auto_reply(self, msg: wxpy.Message):
         if isinstance(msg.chat, Group) and not msg.is_at:
             return
