@@ -51,12 +51,6 @@ class SlaveMessageManager:
         # Message ID: [JSON ID, remaining count]
         self.recall_msg_id_conversion: Dict[str, Tuple[str, int]] = dict()
 
-    def auto_reply(self, msg: wxpy.Message):
-        if isinstance(msg.chat, Group) and not msg.is_at:
-            return
-        else:
-            return '收到消息：{}'.format(msg.text)
-
     def get_chat_and_author(self, msg: wxpy.Message) -> Tuple[Chat, ChatMember]:
         chat = self.channel.chats.wxpy_chat_to_efb_chat(msg.chat)
         author: ChatMember
