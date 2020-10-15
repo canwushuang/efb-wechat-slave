@@ -27,9 +27,12 @@ from ..consts import ATTACHMENT, CARD, FRIENDS, MAP, PICTURE, RECORDING, SHARING
 from ...compatible import *
 import jieba
 import jieba.posseg as pseg
+from wechat_sender import Sender
 
 logger = logging.getLogger(__name__)
 
+#jieba add words
+jieba.add_word('补打卡')
 
 class Message(object):
     """
@@ -129,10 +132,13 @@ class Message(object):
             for word,flag in words:
                 if flag[0] == 'n':
                     n_words.append("#{}".format(word))
+            n_words = list(set(n_words))
             n_text = ' '.join(n_words)
             ret = n_text +'\n'+ str(ret)
         except:
             pass
+        if '#补打卡' in n_words:
+            Sender().send("补打卡 get!")
         if isinstance(ret, str):
             return ret
 

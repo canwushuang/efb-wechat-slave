@@ -36,6 +36,7 @@ from .utils import ExperimentalFlagsManager
 from .vendor import wxpy
 from .vendor.wxpy import ResponseError
 from .vendor.wxpy.utils import PuidMap
+from wechat_sender import listen
 
 
 class WeChatChannel(SlaveChannel):
@@ -63,6 +64,9 @@ class WeChatChannel(SlaveChannel):
     config: Dict[str, Any] = dict()
 
     bot: wxpy.Bot
+
+    #third part wwechat_sender:listenser
+    listen(bot)
 
     # GNU Gettext Translator
 
