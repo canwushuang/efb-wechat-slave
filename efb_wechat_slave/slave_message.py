@@ -50,6 +50,8 @@ class SlaveMessageManager:
         self.file_download_mutex_lock = threading.Lock()
         # Message ID: [JSON ID, remaining count]
         self.recall_msg_id_conversion: Dict[str, Tuple[str, int]] = dict()
+        
+        self.zyy_school_group = wxpy.ensure_one(self.bot.groups().search('丁兰205班家长群'))
 
     def get_chat_and_author(self, msg: wxpy.Message) -> Tuple[Chat, ChatMember]:
         chat = self.channel.chats.wxpy_chat_to_efb_chat(msg.chat)
@@ -109,6 +111,7 @@ class SlaveMessageManager:
             return thread_wrapper
 
     def wechat_msg_register(self):
+        self.bot.register(chats=self.zyy_school_group,except_self=False, msg_types=consts.TEXT)(self.auto_reply)
         self.bot.register(except_self=False, msg_types=consts.TEXT)(self.wechat_text_msg)
         self.bot.register(except_self=False, msg_types=consts.SHARING)(self.wechat_sharing_msg)
         self.bot.register(except_self=False, msg_types=consts.PICTURE)(self.wechat_picture_msg)
@@ -126,6 +129,15 @@ class SlaveMessageManager:
         def wc_msg_system_log(msg):
             self.logger.debug("WeChat System Message:\n%s", repr(msg))
 
+    @Decorators.wechat_msg_meta
+    def auto_reply(self,msg: wxpy.Message) -> Optional[Message]:
+        if isinstence(msg.chat, self.zyy_school_group) and not msg.is_at:
+            return
+        else:
+            return '收到消息:{}'.format(msg.text)
+                        
+        
+    
     @Decorators.wechat_msg_meta
     def wechat_text_msg(self, msg: wxpy.Message) -> Optional[Message]:
         if msg.chat.user_name == "newsapp" and msg.text.startswith("<mmreader>"):
