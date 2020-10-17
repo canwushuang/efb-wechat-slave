@@ -136,7 +136,6 @@ class SlaveMessageManager:
         if self.channel.flag("text_post_processing"):
             text = ews_utils.wechat_string_unescape(msg.text)
         else:
-            n_words = []
             text = msg.text or ""
         efb_msg = Message(
             chat=chat, author=author,
