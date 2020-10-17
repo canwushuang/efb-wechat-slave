@@ -111,7 +111,7 @@ class SlaveMessageManager:
             return thread_wrapper
 
     def wechat_msg_register(self):
-        self.bot.register(chats=self.zyy_school_group,except_self=False, msg_types=consts.TEXT)(self.auto_reply)
+        self.bot.register(chats=zyy_school_group,except_self=False, msg_types=consts.TEXT)(self.auto_reply)
         self.bot.register(except_self=False, msg_types=consts.TEXT)(self.wechat_text_msg)
         self.bot.register(except_self=False, msg_types=consts.SHARING)(self.wechat_sharing_msg)
         self.bot.register(except_self=False, msg_types=consts.PICTURE)(self.wechat_picture_msg)
