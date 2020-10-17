@@ -51,7 +51,7 @@ class SlaveMessageManager:
         # Message ID: [JSON ID, remaining count]
         self.recall_msg_id_conversion: Dict[str, Tuple[str, int]] = dict()
         
-        self.zyy_school_group = wxpy.ensure_one(self.bot.groups().search('丁兰205班家长群'))
+        zyy_school_group = wxpy.ensure_one(self.bot.groups().search('丁兰205班家长群'))
 
     def get_chat_and_author(self, msg: wxpy.Message) -> Tuple[Chat, ChatMember]:
         chat = self.channel.chats.wxpy_chat_to_efb_chat(msg.chat)
@@ -131,7 +131,7 @@ class SlaveMessageManager:
 
     @Decorators.wechat_msg_meta
     def auto_reply(self,msg: wxpy.Message) -> Optional[Message]:
-        if isinstence(msg.chat, self.zyy_school_group) and not msg.is_at:
+        if isinstence(msg.chat, zyy_school_group) and not msg.is_at:
             return
         else:
             return '收到消息:{}'.format(msg.text)
