@@ -110,7 +110,6 @@ class SlaveMessageManager:
             return thread_wrapper
 
     def wechat_msg_register(self):
-        self.bot.register(except_self=False, msg_types=consts.TEXT)(self.auto_reply)
         self.bot.register(except_self=False, msg_types=consts.TEXT)(self.wechat_text_msg)
         self.bot.register(except_self=False, msg_types=consts.SHARING)(self.wechat_sharing_msg)
         self.bot.register(except_self=False, msg_types=consts.PICTURE)(self.wechat_picture_msg)
@@ -127,16 +126,6 @@ class SlaveMessageManager:
         @self.bot.register(msg_types=consts.SYSTEM)
         def wc_msg_system_log(msg):
             self.logger.debug("WeChat System Message:\n%s", repr(msg))
-
-    @Decorators.wechat_msg_meta
-    def auto_reply(self,msg: wxpy.Message) -> Optional[Message]:
-        zyy_school_group = wxpy.ensure_one(self.bot.groups().search('丁兰205班家长群'))
-        if isinstence(msg.chat, zyy_school_group) and not msg.is_at:
-            return
-        else:
-            return '收到消息:{}'.format(msg.text)
-                        
-        
     
     @Decorators.wechat_msg_meta
     def wechat_text_msg(self, msg: wxpy.Message) -> Optional[Message]:
